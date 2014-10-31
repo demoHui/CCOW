@@ -1,0 +1,2 @@
+---- add remote data pid = %d Matches (1 in 1 files) ----
+Subst.cpp (libmint):			printf("add remote data pid = %d,addr = %x  iteration %d request version %d\n",pthread->getPid(),addr,iteration,version);
