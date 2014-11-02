@@ -1,0 +1,15 @@
+# C compiler
+CC = mipseb-linux-gcc
+AR = mipseb-linux-ar
+CFLAGS = -g -c -mips2 -mabi=32 -Wa,-non_shared -mno-abicalls -DSESC_COW
+LDFLAGS = -static -Wl,--script=/home/sescutils/install/mipseb-linux/lib/ldscripts/mint.x -lm
+
+all:
+	$(CC) $(CFLAGS) /home/sesc_project/sesc_cow_update/src/libapp/sesc_locks.c;
+	$(CC) $(CFLAGS) /home/sesc_project/sesc_cow_update/src/libapp/sesc_thread.c;
+	$(CC) $(CFLAGS) /home/sesc_project/sesc_cow_update/src/libapp/sesc_events.c;
+	$(CC) $(CFLAGS) SESC_ThreadControl.c SESC_ThreadControl.h
+	$(AR) -r libTLS.a  sesc_thread.o sesc_locks.o sesc_events.o SESC_ThreadControl.o; 
+
+clean:
+	rm *.o *.a *~ *.so -f

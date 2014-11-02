@@ -185,6 +185,7 @@ typedef enum ud_class_e {
  OP(mint_sesc_set_num_threads);
  OP(mint_sesc_inc_threads);
  OP(mint_sesc_dec_threads);
+ OP(mint_sesc_non_block_wait);
   #endif
   OP(mint_sesc_sysconf);
   OP(mint_sesc_wait);

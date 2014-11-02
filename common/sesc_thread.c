@@ -40,7 +40,7 @@ void sesc_version_remote(uint32_t addr,int32_t version,int32_t iteration,int32_t
 void sesc_atomic(int * num, int n)
 {
 }
-  int sesc_get_num_threads(uint32_t addr)
+  int sesc_get_num_threads()
   	{
   	}
   void sesc_set_num_threads(int i)
@@ -85,9 +85,6 @@ void sesc_exit(int err){
 void sesc_wait(void){
   fprintf(stderr,"sesc_wait shouldn't be called without a simulator\n");
   exit(-1);
-}
-
-void sesc_non_block_wait(void){
 }
 
 void sesc_pseudoreset(void){
@@ -337,7 +334,7 @@ void sesc_version_remote(uint32_t addr,int32_t version,int32_t iteration,int32_t
 void sesc_atomic(int * num, int n)
 {
 }
-int sesc_get_num_threads(uint32_t addr)
+int sesc_get_num_threads()
 {
 }
 void sesc_set_num_thread(int i)
@@ -424,11 +421,6 @@ void sesc_wait(void)
 {
   addWaiting(pthread_self());
 }
-
-
-void sesc_non_block_wait(void){
-}
-
 
 void sesc_pseudoreset(void)
 {

@@ -118,6 +118,10 @@ private:
   RiskLoadProf *riskLoadProf;
 #endif
 
+#ifdef SESC_COW_UPDATE
+  int sysStatus;/*0 determined;1 undeterminded;*/
+#endif
+
 protected:
   StaticCallbackMember0<RunningProcs, &RunningProcs::finishWorkNow> finishWorkNowCB;
 
@@ -191,9 +195,7 @@ public:
 //#ifdef SESC_COW_VERSION
 #ifdef SESC_COW_UPDATE
   bool verCmp(ThreadContext* pthread);
-
   bool eventCommit(ThreadContext * pthread);
-
   bool isOrderCommit(Pid_t pid);
   void elmClear(Pid_t pid);
   void eventNonCommitExit();
@@ -202,7 +204,10 @@ public:
   void copyToReplayQ();
   void eventFakeExit(Pid_t cpid, int32_t err);
   void threadsExit();
-  #endif
+  void setSysStatus(int status);
+  int getSysStatus();
+  bool isAllSpecThread(){return allThread.size()==recordThread;}
+#endif
   void eventExit(Pid_t cpid, int32_t err);
   void tryWakeupParent(Pid_t cpid);
   void eventWait(Pid_t cpid);

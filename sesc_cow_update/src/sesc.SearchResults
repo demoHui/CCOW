@@ -1,2 +1,5 @@
----- add remote data pid = %d Matches (1 in 1 files) ----
-Subst.cpp (libmint):			printf("add remote data pid = %d,addr = %x  iteration %d request version %d\n",pthread->getPid(),addr,iteration,version);
+---- setSysStatus Matches (4 in 3 files) ----
+OSSim.cpp (libcore):void setSysStatus(int status)
+OSSim.h (libcore):  void setSysStatus(int status);
+Subst.cpp (libmint):  osSim->setSysStatus(1);
+Subst.cpp (libmint):  else {specStatus = false;osSim->setSysStatus();}

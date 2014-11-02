@@ -137,6 +137,7 @@ OSSim::OSSim(int32_t argc, char **argv, char **envp)
   signal(SIGQUIT,signalCatcher);
 #ifdef SESC_COW_UPDATE
 	numReplay = 0;
+	sysStatus = 0;
 #endif
   char *tmp=(char *)malloc(argc*50+4096);
   tmp[0] = 0;
@@ -699,6 +700,14 @@ void OSSim::threadsExit()
 			osSim->threadnum++;
 	}
 	dts.clear();
+}
+void setSysStatus(int status)
+{
+	osSim->sysStatus = status;
+}
+int getSysStatus()
+{
+	return osSim->sysStatus;
 }
 #endif
 void OSSim::eventFakeExit(Pid_t cpid, int32_t err)

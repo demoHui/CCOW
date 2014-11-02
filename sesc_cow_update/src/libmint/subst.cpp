@@ -489,6 +489,7 @@ func_desc_t Func_subst[] = {
   {"sesc_release",            mint_sesc_release,               1, OpExposed},
   {"sesc_release_",           mint_sesc_release,               1, OpExposed},
   {"sesc_wait",               mint_sesc_wait,                  1, OpClass(OpUndoable,OpAtStart)},
+  {"sesc_non_block_wait",     mint_sesc_non_block_wait,        1, OpClass(OpUndoable,OpAtStart)},
   {"sesc_pseudoreset",        mint_sesc_pseudoreset,           1, OpExposed},
   #ifdef PRINTF
   {"printf",                      mint_printf,                     1, OpExposed},
@@ -854,7 +855,12 @@ OP(mint_sesc_version_remote){
 	}
 	return pthread->getRetIcode();
 }
-
+OP(mint_sesc_non_block_wait){
+  //pthread->setPCIcode(pthread->getRetIcode);
+  /*change system status*/
+  osSim->setSysStatus(1);
+  return pthread->getRetIcode();
+}
 #endif
 OP(mint_sesc_spawn){
   // Set things up for the return from this call
@@ -897,9 +903,14 @@ OP(mint_sesc_spawn){
   child->init();
 
   pthread->newChild(child);
+  bool specStatus;
+  if(osSim->getSysStatus()&&osSim->isAllSpecThread())
+  	{specStatus = true;
+  else {specStatus = false;osSim->setSysStatus(0);}
+	  	
 
 #ifdef SESC_COW_UPDATE
-  if(flags)
+  if(flags&&specStatus)
   {
 	  child->setSpecThread(true);
 	  flags = 0;
@@ -942,9 +953,9 @@ OP(mint_sesc_spawn){
   // The return value for the child is 0
   child->setRetVal(0);
   // Inform SESC of what we have done here
-
 #ifdef SESC_COW_UPDATE
-  osSim->allThread.push(child);
+	if(child->isSpecThread())
+		osSim->allThread.push(child);
 #endif
   ThreadContext::getContext(child->getPid())->copy(child);
   osSim->eventSpawn(ppid,cpid,flags);

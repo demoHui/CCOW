@@ -162,7 +162,7 @@ extern "C" {
   void sesc_broadcast(uint32_t addr,int rw,int iteration);
   void sesc_main_clear();
   int sesc_get_globalClock(long long* clock);
-  int sesc_get_num_threads(uint32_t addr);
+  int sesc_get_num_threads(uint32_t threads);
   void sesc_set_num_threads(int i);
   void sesc_inc_threads();
   void sesc_dec_threads();
@@ -174,7 +174,6 @@ extern "C" {
   void sesc_exit(int32_t err);
   void sesc_finish(void);  /* Finish the whole simulation */
   void sesc_wait(void);
-  void sesc_non_block_wait(void);/*non-block waiting*/
 
   void sesc_pseudoreset(void); /* Reset/Capture some stats for parallel
                                         applications to subtract spawning
